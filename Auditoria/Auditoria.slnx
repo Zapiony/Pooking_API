@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Booking.Auditoria.DataManagement\Booking.Auditoria.DataManagement.csproj" />
+  <Project Path="Booking.Auditoria.DataAccess\Booking.Auditoria.DataAccess.csproj" />
+  <Project Path="Booking.Auditoria.API\Booking.Auditoria.API.csproj" />
+  <Project Path="Booking.Auditoria.Tests\Booking.Auditoria.Tests.csproj" />
+</Solution>
