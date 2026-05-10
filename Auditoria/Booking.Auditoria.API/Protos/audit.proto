@@ -1,0 +1,60 @@
+﻿syntax = "proto3";
+
+package Booking.Auditoria;
+option csharp_namespace = "Booking.Auditoria.API.Protos";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AuditoriaGrpcService — expuesto para que el Middleware (y otros microservicios)
+// registren eventos de auditoría sin pasar por el endpoint REST público.
+// ─────────────────────────────────────────────────────────────────────────────
+
+service AuditoriaGrpcService {
+  // Registra un evento de auditoría (llamado desde Booking.Middleware).
+  rpc RecordAuditEvent (AuditoriaEventRequest) returns (AuditoriaEventReply);
+
+  // Consulta un log por id (uso interno entre microservicios).
+  rpc GetAuditLogById  (AuditoriaLogByIdRequest) returns (AuditoriaLogReply);
+}
+
+// ─── Mensajes de entrada ────────────────────────────────────────────────────
+
+message AuditoriaEventRequest {
+  string tabla_afectada    = 1;  // 'cliente', 'reservas', 'servicio', etc.
+  string esquema_afectado  = 2;  // siempre 'booking'
+  string operacion         = 3;  // INSERT | UPDATE | DELETE
+  string id_registro       = 4;  // GUID del registro afectado
+  string datos_anteriores  = 5;  // JSON string (vacío en INSERT)
+  string datos_nuevos      = 6;  // JSON string (vacío en DELETE)
+  string creado_por_usuario= 7;  // username del JWT propagado
+  string ip                = 8;  // IP del request original
+  string servicio_origen   = 9;  // nombre del microservicio productor
+  string equipo_origen     = 10; // hostname del servidor productor
+}
+
+message AuditoriaLogByIdRequest {
+  int64 id_log = 1;
+}
+
+// ─── Mensajes de respuesta ──────────────────────────────────────────────────
+
+message AuditoriaEventReply {
+  bool  success = 1;
+  int64 id_log  = 2;   // ID generado; 0 si hubo error
+  string message= 3;
+}
+
+message AuditoriaLogReply {
+  bool   found             = 1;
+  int64  id_log            = 2;
+  string tabla_afectada    = 3;
+  string esquema_afectado  = 4;
+  string operacion         = 5;
+  string id_registro       = 6;
+  string datos_anteriores  = 7;
+  string datos_nuevos      = 8;
+  string creado_por_usuario= 9;
+  string fecha_utc         = 10; // ISO 8601
+  string ip                = 11;
+  string servicio_origen   = 12;
+  string equipo_origen     = 13;
+}

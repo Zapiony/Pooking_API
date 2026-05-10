@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Booking.Auditoria.API</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- gRPC server-side -->
+    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
+
+    <!-- Auth JWT Bearer -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
+
+    <!-- EF Core (para DI del DbContext) -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+
+    <!-- Swagger/OpenAPI -->
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+
+    <!-- Override: fuerza EF Core Relational 9.0.4 vs 9.0.1 que trae Grpc.AspNetCore -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Booking.Auditoria.DataAccess\Booking.Auditoria.DataAccess.csproj" />
+    <ProjectReference Include="..\Booking.Auditoria.DataManagement\Booking.Auditoria.DataManagement.csproj" />
+  </ItemGroup>
+
+  <!-- Archivos .proto -->
+  <ItemGroup>
+    <Protobuf Include="Protos\audit.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+</Project>
