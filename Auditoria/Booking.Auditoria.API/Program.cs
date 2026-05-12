@@ -6,7 +6,7 @@ using Booking.Auditoria.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -89,16 +89,9 @@ builder.Services.AddSwaggerGen(c =>
         In           = ParameterLocation.Header,
         Description  = "Introduce tu JWT: Bearer {token}"
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                    { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-            },
-            Array.Empty<string>()
-        }
+        { new OpenApiSecuritySchemeReference("Bearer"), new List<string>() }
     });
 });
 
@@ -111,7 +104,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AuditoriaDbContext>();
-    await db.Database.MigrateAsync();
+    if (db.Database.GetMigrations().Any())
+        await db.Database.MigrateAsync();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
