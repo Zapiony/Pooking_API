@@ -49,6 +49,11 @@ public class ReservasConfiguration : IEntityTypeConfiguration<ReservasEntity>
             .HasMaxLength(60)
             .IsRequired();
 
+        builder.Property(e => e.NombreProveedor)
+            .HasColumnName("nombre_proveedor")
+            .HasMaxLength(200)
+            .IsRequired();
+
         // [5] Identificador externo
         builder.Property(e => e.IdReservaExterna)
             .HasColumnName("id_reserva_externa")

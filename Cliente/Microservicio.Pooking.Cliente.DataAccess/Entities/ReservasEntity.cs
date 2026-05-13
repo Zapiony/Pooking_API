@@ -47,6 +47,13 @@ public class ReservasEntity
     /// <summary>Tipo de servicio capturado al momento de la reserva (inmutable).</summary>
     public string TipoServicioSnap { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Nombre del proveedor que opera la reserva.
+    /// Corresponde a booking.servicio.razon_social en el dominio Servicio.
+    /// Necesario para saber a qué proveedor consultar el estado de la reserva.
+    /// </summary>
+    public string NombreProveedor { get; set; } = string.Empty;
+
     // -------------------------------------------------------------------------
     // [5] Identificador externo del proveedor / sistema origen
     // -------------------------------------------------------------------------
