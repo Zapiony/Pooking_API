@@ -9,6 +9,7 @@ public class ReservasDataModel
     public Guid GuidServicioRef { get; set; }
     public string NombreServicioSnap { get; set; } = string.Empty;
     public string TipoServicioSnap { get; set; } = string.Empty;
+    public string NombreProveedor { get; set; } = string.Empty;
     public string IdReservaExterna { get; set; } = string.Empty;
     public DateTimeOffset FechaReservaUtc { get; set; }
     public DateTime FechaInicio { get; set; }
