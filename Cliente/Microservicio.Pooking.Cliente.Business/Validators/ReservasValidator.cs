@@ -20,6 +20,11 @@ public static class ReservasValidator
         if (string.IsNullOrWhiteSpace(request.TipoServicioSnap))
             errores.Add("El tipo del servicio (snapshot) es obligatorio.");
 
+        if (string.IsNullOrWhiteSpace(request.NombreProveedor))
+            errores.Add("El nombre del proveedor es obligatorio.");
+        else if (request.NombreProveedor.Length > 200)
+            errores.Add("El nombre del proveedor no puede exceder 200 caracteres.");
+
         if (string.IsNullOrWhiteSpace(request.IdReservaExterna))
             errores.Add("El id de reserva externa es obligatorio.");
 

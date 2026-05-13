@@ -16,6 +16,12 @@ public class CrearReservaRequest
     /// <summary>Snapshot del tipo de servicio (Vuelos | Alojamiento | Atracciones | Alquiler de Carros).</summary>
     public string TipoServicioSnap { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Nombre del proveedor que opera la reserva (ej. "Avianca", "Hotel Sangay", "Localiza").
+    /// Corresponde a la razón social del servicio en el dominio Servicio.
+    /// </summary>
+    public string NombreProveedor { get; set; } = string.Empty;
+
     public string IdReservaExterna { get; set; } = string.Empty;
     public DateTime FechaInicio { get; set; }
     public DateTime? FechaFin { get; set; }
