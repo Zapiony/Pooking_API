@@ -1,8 +1,8 @@
-using Microservicio.Pooking.Servicio.DataAcces.Common;
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Common;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microservicio.Pooking.Servicio.DataAcces.Queries;
+namespace Microservicio.Pooking.Servicio.DataAccess.Queries;
 
 /// <summary>
 /// Consultas de solo lectura para el dominio de servicios.
@@ -15,10 +15,11 @@ public class ServicioQueryRepository : IServicioQueryRepository
 
     public ServicioQueryRepository(DbContext context) => _context = context;
 
+    // Estado INA queda oculto igual que un borrado logico; solo ACT es visible en lecturas publicas.
     private IQueryable<ServicioEntity> QueryVigentes =>
         _context.Set<ServicioEntity>()
                 .AsNoTracking()
-                .Where(s => !s.EsEliminado);
+                .Where(s => !s.EsEliminado && s.Estado == "ACT");
 
     public async Task<PagedResult<ServicioResumenDto>> ListarServiciosAsync(
         int paginaActual, int tamanoPagina, CancellationToken ct = default)

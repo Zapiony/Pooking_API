@@ -1,5 +1,5 @@
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
-using Microservicio.Pooking.Servicio.DataAcces.Queries;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Queries;
 using Microservicio.Pooking.Servicio.DataManagement.Models;
 
 namespace Microservicio.Pooking.Servicio.DataManagement.Mappers;
@@ -98,7 +98,6 @@ public static class ServicioDataMapper
         destino.Direccion = origen.Direccion;
         destino.SitioWeb = origen.SitioWeb;
         destino.LogoUrl = origen.LogoUrl;
-        destino.Estado = origen.Estado;
         destino.ModificadoPorUsuario = origen.ModificadoPorUsuario;
         destino.FechaModificacionUtc = origen.FechaModificacionUtc ?? DateTimeOffset.UtcNow;
         destino.ModificacionIp = origen.ModificacionIp;

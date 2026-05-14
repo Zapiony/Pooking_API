@@ -12,7 +12,7 @@ Equipo: Pooking
 Microservicio.Pooking.Servicio.Api          ← Controladores, middleware, Swagger
 Microservicio.Pooking.Servicio.Business     ← Lógica de negocio, DTOs, validadores
 Microservicio.Pooking.Servicio.DataManagement ← Servicios de datos, UnitOfWork
-Microservicio.Pooking.Servicio.DataAcces    ← Entidades, DbContext, repositorios
+Microservicio.Pooking.Servicio.DataAccess    ← Entidades, DbContext, repositorios
 ```
 
 ## Endpoints principales
@@ -48,11 +48,11 @@ Microservicio.Pooking.Servicio.DataAcces    ← Entidades, DbContext, repositori
 
 ```bash
 dotnet ef migrations add InitServicioModule \
-  --project Microservicio.Pooking.Servicio.DataAcces \
+  --project Microservicio.Pooking.Servicio.DataAccess \
   --startup-project Microservicio.Pooking.Servicio.Api
 
 dotnet ef database update \
-  --project Microservicio.Pooking.Servicio.DataAcces \
+  --project Microservicio.Pooking.Servicio.DataAccess \
   --startup-project Microservicio.Pooking.Servicio.Api
 ```
 

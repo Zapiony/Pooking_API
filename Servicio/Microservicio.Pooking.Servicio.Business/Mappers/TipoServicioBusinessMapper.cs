@@ -18,12 +18,8 @@ public static class TipoServicioBusinessMapper
 
     public static void AplicarActualizacion(ActualizarTipoServicioRequest r, TipoServicioDataModel destino)
     {
-        var rv = RowVersionMapper.DesdeBase64(r.RowVersionBase64);
-        if (rv is not null) destino.RowVersion = rv;
-
         destino.Nombre = r.Nombre.Trim();
         destino.Descripcion = r.Descripcion?.Trim();
-        destino.Estado = r.Estado.Trim();
         destino.ModificadoPorUsuario = r.ModificadoPorUsuario;
         destino.ModificacionIp = r.ModificacionIp;
         destino.ServicioOrigen = r.ServicioOrigen;

@@ -38,6 +38,11 @@ public sealed class ExceptionHandlingMiddleware
 
         var (statusCode, body) = exception switch
         {
+            BadHttpRequestException => (
+                (int)HttpStatusCode.BadRequest,
+                ApiErrorResponse.Crear(
+                    "El identificador proporcionado no tiene un formato válido.",
+                    Array.Empty<string>())),
             ValidationException ve => (
                 (int)HttpStatusCode.BadRequest,
                 ApiErrorResponse.Crear(ve.Message, ve.Errors.ToArray())),
@@ -45,7 +50,7 @@ public sealed class ExceptionHandlingMiddleware
                 (int)HttpStatusCode.NotFound,
                 ApiErrorResponse.Crear(ne.Message, new[] { ne.Message })),
             BusinessException be => (
-                (int)HttpStatusCode.Conflict,
+                (int)HttpStatusCode.BadRequest,
                 ApiErrorResponse.Crear(be.Message, new[] { be.Message })),
             _ => (
                 (int)HttpStatusCode.InternalServerError,

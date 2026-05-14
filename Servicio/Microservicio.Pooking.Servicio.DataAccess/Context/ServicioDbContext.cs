@@ -1,7 +1,7 @@
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microservicio.Pooking.Servicio.DataAcces.Context;
+namespace Microservicio.Pooking.Servicio.DataAccess.Context;
 
 public class ServicioDbContext : DbContext
 {

@@ -1,5 +1,5 @@
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
-using Microservicio.Pooking.Servicio.DataAcces.Queries;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Queries;
 using Microservicio.Pooking.Servicio.DataManagement.Interfaces;
 using Microservicio.Pooking.Servicio.DataManagement.Mappers;
 using Microservicio.Pooking.Servicio.DataManagement.Models;
@@ -114,9 +114,9 @@ public sealed class ServicioDataService : IServicioDataService
         var entidad = await _uow.ServicioRepository.ObtenerConTipoServicioPorGuidAsync(modelo.GuidServicio, ct)
             ?? throw new InvalidOperationException("No se encontró el servicio a actualizar.");
 
-        var tipoDestino = await ResolverTipoAsync(modelo, ct);
-        if (tipoDestino is not null)
-            modelo.IdTipoServicio = tipoDestino.IdTipoServicio;
+        var tipoDestino = await ResolverTipoAsync(modelo, ct)
+            ?? throw new InvalidOperationException("El tipo de servicio especificado no existe o estÃ¡ inactivo.");
+        modelo.IdTipoServicio = tipoDestino.IdTipoServicio;
 
         ServicioDataMapper.AplicarCambios(entidad, modelo);
         _uow.ServicioRepository.Actualizar(entidad);
