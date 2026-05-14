@@ -1,6 +1,6 @@
-using Microservicio.Pooking.Servicio.DataAcces.Common;
+using Microservicio.Pooking.Servicio.DataAccess.Common;
 
-namespace Microservicio.Pooking.Servicio.DataAcces.Queries;
+namespace Microservicio.Pooking.Servicio.DataAccess.Queries;
 
 // ── DTOs de proyección ────────────────────────────────────────────────────
 

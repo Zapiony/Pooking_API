@@ -1,4 +1,4 @@
-namespace Microservicio.Pooking.Servicio.DataAcces.Common;
+namespace Microservicio.Pooking.Servicio.DataAccess.Common;
 
 /// <summary>
 /// Envuelve una página de resultados junto con los metadatos de paginación.

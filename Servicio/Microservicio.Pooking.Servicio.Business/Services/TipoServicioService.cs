@@ -16,7 +16,7 @@ public sealed class TipoServicioService : ITipoServicioService
 
     public async Task<TipoServicioResponse?> ObtenerPorGuidAsync(Guid guid, CancellationToken ct = default)
     {
-        if (guid == Guid.Empty) throw new ValidationException("GuidTipoServicio no es válido.");
+        if (guid == Guid.Empty) throw new ValidationException("GuidTipoServicio no es valido.");
         var m = await _data.ObtenerPorGuidAsync(guid, ct);
         return m is null ? null : TipoServicioBusinessMapper.ARespuesta(m);
     }
@@ -58,7 +58,11 @@ public sealed class TipoServicioService : ITipoServicioService
     {
         TipoServicioValidator.ValidarActualizar(request);
         var existente = await _data.ObtenerPorGuidAsync(request.GuidTipoServicio, ct)
-            ?? throw new NotFoundException("No se encontró el tipo de servicio indicado.");
+            ?? throw new NotFoundException("No se encontro el tipo de servicio indicado.");
+        var duplicado = await _data.ObtenerPorNombreAsync(request.Nombre.Trim(), ct);
+        if (duplicado is not null && duplicado.GuidTipoServicio != request.GuidTipoServicio)
+            throw new BusinessException("Ya existe un tipo de servicio con ese nombre.");
+
         TipoServicioBusinessMapper.AplicarActualizacion(request, existente);
         try
         {
@@ -70,7 +74,10 @@ public sealed class TipoServicioService : ITipoServicioService
 
     public async Task EliminarAsync(Guid guid, CancellationToken ct = default)
     {
-        if (guid == Guid.Empty) throw new ValidationException("GuidTipoServicio no es válido.");
+        if (guid == Guid.Empty) throw new ValidationException("GuidTipoServicio no es valido.");
+        if (await _data.TieneServiciosAsociadosAsync(guid, ct))
+            throw new BusinessException("No se puede eliminar el tipo de servicio porque tiene servicios registrados asociados.");
+
         try { await _data.EliminarLogicoAsync(guid, ct); }
         catch (InvalidOperationException ex) { DataServiceExceptionMapper.PropagarSiInvalidOperation(ex); throw; }
     }

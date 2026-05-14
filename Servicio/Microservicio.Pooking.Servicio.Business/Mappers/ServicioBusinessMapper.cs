@@ -21,7 +21,7 @@ public static class ServicioBusinessMapper
         NombreComercial = r.NombreComercial?.Trim(),
         TipoIdentificacion = r.TipoIdentificacion.Trim(),
         NumeroIdentificacion = r.NumeroIdentificacion.Trim(),
-        CorreoContacto = r.CorreoContacto.Trim(),
+        CorreoContacto = r.CorreoContacto?.Trim() ?? string.Empty,
         TelefonoContacto = r.TelefonoContacto?.Trim(),
         Direccion = r.Direccion?.Trim(),
         SitioWeb = r.SitioWeb?.Trim(),
@@ -34,20 +34,16 @@ public static class ServicioBusinessMapper
 
     public static void AplicarActualizacion(ActualizarServicioRequest r, ServicioDataModel destino)
     {
-        var rv = RowVersionMapper.DesdeBase64(r.RowVersionBase64);
-        if (rv is not null) destino.RowVersion = rv;
-
         destino.GuidTipoServicio = r.GuidTipoServicio;
         destino.RazonSocial = r.RazonSocial.Trim();
         destino.NombreComercial = r.NombreComercial?.Trim();
         destino.TipoIdentificacion = r.TipoIdentificacion.Trim();
         destino.NumeroIdentificacion = r.NumeroIdentificacion.Trim();
-        destino.CorreoContacto = r.CorreoContacto.Trim();
+        destino.CorreoContacto = r.CorreoContacto?.Trim() ?? string.Empty;
         destino.TelefonoContacto = r.TelefonoContacto?.Trim();
         destino.Direccion = r.Direccion?.Trim();
         destino.SitioWeb = r.SitioWeb?.Trim();
         destino.LogoUrl = r.LogoUrl?.Trim();
-        destino.Estado = r.Estado.Trim();
         destino.ModificadoPorUsuario = r.ModificadoPorUsuario;
         destino.ModificacionIp = r.ModificacionIp;
         destino.ServicioOrigen = r.ServicioOrigen;

@@ -1,4 +1,4 @@
-namespace Microservicio.Pooking.Servicio.DataAcces.Entities;
+namespace Microservicio.Pooking.Servicio.DataAccess.Entities;
 
 /// <summary>
 /// Representa un proveedor o servicio externo integrable en la plataforma Pooking.

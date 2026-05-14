@@ -1,9 +1,9 @@
-using Microservicio.Pooking.Servicio.DataAcces.Common;
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
-using Microservicio.Pooking.Servicio.DataAcces.Repositories.Interfaces;
+using Microservicio.Pooking.Servicio.DataAccess.Common;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microservicio.Pooking.Servicio.DataAcces.Repositories;
+namespace Microservicio.Pooking.Servicio.DataAccess.Repositories;
 
 /// <summary>
 /// Nunca llama SaveChanges directamente.
@@ -16,7 +16,7 @@ public class TipoServicioRepository : ITipoServicioRepository
     public TipoServicioRepository(DbContext context) => _context = context;
 
     private IQueryable<TipoServicioEntity> QueryVigentes =>
-        _context.Set<TipoServicioEntity>().Where(ts => !ts.EsEliminado);
+        _context.Set<TipoServicioEntity>().Where(ts => !ts.EsEliminado && ts.Estado == "ACT");
 
     public async Task<TipoServicioEntity?> ObtenerPorIdAsync(int idTipoServicio, CancellationToken ct = default)
         => await QueryVigentes.FirstOrDefaultAsync(ts => ts.IdTipoServicio == idTipoServicio, ct);
@@ -29,7 +29,6 @@ public class TipoServicioRepository : ITipoServicioRepository
 
     public async Task<IReadOnlyList<TipoServicioEntity>> ObtenerTodosActivosAsync(CancellationToken ct = default)
         => await QueryVigentes
-            .Where(ts => ts.Estado == "ACT")
             .OrderBy(ts => ts.Nombre)
             .ToListAsync(ct);
 
@@ -51,7 +50,7 @@ public class TipoServicioRepository : ITipoServicioRepository
     }
 
     public async Task<bool> ExisteNombreAsync(string nombre, CancellationToken ct = default)
-        => await _context.Set<TipoServicioEntity>().AnyAsync(ts => ts.Nombre == nombre, ct);
+        => await QueryVigentes.AnyAsync(ts => ts.Nombre == nombre, ct);
 
     public async Task AgregarAsync(TipoServicioEntity tipoServicio, CancellationToken ct = default)
         => await _context.Set<TipoServicioEntity>().AddAsync(tipoServicio, ct);

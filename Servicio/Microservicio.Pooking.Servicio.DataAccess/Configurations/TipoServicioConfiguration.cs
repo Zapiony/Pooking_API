@@ -1,8 +1,8 @@
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Microservicio.Pooking.Servicio.DataAcces.Configurations;
+namespace Microservicio.Pooking.Servicio.DataAccess.Configurations;
 
 public class TipoServicioConfiguration : IEntityTypeConfiguration<TipoServicioEntity>
 {

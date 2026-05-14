@@ -1,5 +1,5 @@
-using Microservicio.Pooking.Servicio.DataAcces.Queries;
-using Microservicio.Pooking.Servicio.DataAcces.Repositories.Interfaces;
+using Microservicio.Pooking.Servicio.DataAccess.Queries;
+using Microservicio.Pooking.Servicio.DataAccess.Repositories.Interfaces;
 
 namespace Microservicio.Pooking.Servicio.DataManagement.Interfaces;
 

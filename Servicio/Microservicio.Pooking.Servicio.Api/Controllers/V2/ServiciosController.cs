@@ -1,15 +1,13 @@
-using Asp.Versioning;
 using Microservicio.Pooking.Servicio.Api.Models.Common;
 using Microservicio.Pooking.Servicio.Business.DTOs.Servicio;
 using Microservicio.Pooking.Servicio.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microservicio.Pooking.Servicio.Api.Controllers.V1;
+namespace Microservicio.Pooking.Servicio.Api.Controllers.V2;
 
 [ApiController]
-[ApiVersion(1)]
-[Route("api/v{version:apiVersion}/servicios")]
+[Route("api/v2/servicios")]
 [AllowAnonymous]
 public sealed class ServiciosController : ControllerBase
 {
@@ -55,7 +53,7 @@ public sealed class ServiciosController : ControllerBase
     }
 
     /// <summary>Obtiene el detalle completo de un servicio por GUID.</summary>
-    [HttpGet("{guid:guid}/detalle")]
+    [HttpGet("{guid}/detalle")]
     [ProducesResponseType(typeof(ApiResponse<ServicioResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObtenerDetalleAsync(Guid guid, CancellationToken ct = default)
@@ -70,7 +68,7 @@ public sealed class ServiciosController : ControllerBase
     }
 
     /// <summary>Obtiene un servicio por GUID.</summary>
-    [HttpGet("{guid:guid}")]
+    [HttpGet("{guid}")]
     [ProducesResponseType(typeof(ApiResponse<ServicioResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObtenerPorGuidAsync(Guid guid, CancellationToken ct = default)
@@ -99,7 +97,7 @@ public sealed class ServiciosController : ControllerBase
     }
 
     /// <summary>Actualiza los datos de un servicio existente.</summary>
-    [HttpPut("{guid:guid}")]
+    [HttpPut("{guid}")]
     [ProducesResponseType(typeof(ApiResponse<ServicioResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ApiResponse<ServicioResponse>>> ActualizarAsync(
@@ -113,7 +111,7 @@ public sealed class ServiciosController : ControllerBase
     }
 
     /// <summary>Eliminación lógica de un servicio.</summary>
-    [HttpDelete("{guid:guid}")]
+    [HttpDelete("{guid}")]
     [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> EliminarAsync(Guid guid, CancellationToken ct = default)

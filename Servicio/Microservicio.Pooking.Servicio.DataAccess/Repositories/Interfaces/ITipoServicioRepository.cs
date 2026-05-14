@@ -1,7 +1,7 @@
-using Microservicio.Pooking.Servicio.DataAcces.Common;
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Common;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
 
-namespace Microservicio.Pooking.Servicio.DataAcces.Repositories.Interfaces;
+namespace Microservicio.Pooking.Servicio.DataAccess.Repositories.Interfaces;
 
 public interface ITipoServicioRepository
 {

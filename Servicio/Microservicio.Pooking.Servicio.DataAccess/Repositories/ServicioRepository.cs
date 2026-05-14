@@ -1,9 +1,9 @@
-using Microservicio.Pooking.Servicio.DataAcces.Common;
-using Microservicio.Pooking.Servicio.DataAcces.Entities;
-using Microservicio.Pooking.Servicio.DataAcces.Repositories.Interfaces;
+using Microservicio.Pooking.Servicio.DataAccess.Common;
+using Microservicio.Pooking.Servicio.DataAccess.Entities;
+using Microservicio.Pooking.Servicio.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microservicio.Pooking.Servicio.DataAcces.Repositories;
+namespace Microservicio.Pooking.Servicio.DataAccess.Repositories;
 
 /// <summary>
 /// Nunca llama SaveChanges directamente.
@@ -15,8 +15,9 @@ public class ServicioRepository : IServicioRepository
 
     public ServicioRepository(DbContext context) => _context = context;
 
+    // Estado INA queda oculto igual que un borrado logico; solo ACT es visible en lecturas publicas.
     private IQueryable<ServicioEntity> QueryVigentes =>
-        _context.Set<ServicioEntity>().Where(s => !s.EsEliminado);
+        _context.Set<ServicioEntity>().Where(s => !s.EsEliminado && s.Estado == "ACT");
 
     public async Task<ServicioEntity?> ObtenerPorIdAsync(int idServicio, CancellationToken ct = default)
         => await QueryVigentes.FirstOrDefaultAsync(s => s.IdServicio == idServicio, ct);
@@ -79,8 +80,16 @@ public class ServicioRepository : IServicioRepository
         string tipoIdentificacion, string numeroIdentificacion, CancellationToken ct = default)
         => await _context.Set<ServicioEntity>()
             .AnyAsync(s =>
+                !s.EsEliminado &&
                 s.TipoIdentificacion == tipoIdentificacion &&
                 s.NumeroIdentificacion == numeroIdentificacion, ct);
+
+    public async Task<bool> TieneServiciosAsociadosAsync(Guid guidTipoServicio, CancellationToken ct = default)
+        => await _context.Set<ServicioEntity>()
+            .AnyAsync(s =>
+                !s.EsEliminado &&
+                s.Estado == "ACT" &&
+                s.TipoServicio.GuidTipoServicio == guidTipoServicio, ct);
 
     public async Task AgregarAsync(ServicioEntity servicio, CancellationToken ct = default)
         => await _context.Set<ServicioEntity>().AddAsync(servicio, ct);

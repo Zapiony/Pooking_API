@@ -1,9 +1,9 @@
-using Microservicio.Pooking.Servicio.DataAcces.Common;
+using Microservicio.Pooking.Servicio.DataAccess.Common;
 
 namespace Microservicio.Pooking.Servicio.DataManagement.Models;
 
 /// <summary>
-/// Resultado paginado de la capa DataManagement, desacoplado de PagedResult de DataAcces.
+/// Resultado paginado de la capa DataManagement, desacoplado de PagedResult de DataAccess.
 /// </summary>
 public sealed class DataPagedResult<T>
 {

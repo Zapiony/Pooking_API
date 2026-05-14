@@ -1,15 +1,13 @@
-using Asp.Versioning;
 using Microservicio.Pooking.Servicio.Api.Models.Common;
 using Microservicio.Pooking.Servicio.Business.DTOs.TipoServicio;
 using Microservicio.Pooking.Servicio.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microservicio.Pooking.Servicio.Api.Controllers.V1;
+namespace Microservicio.Pooking.Servicio.Api.Controllers.V2;
 
 [ApiController]
-[ApiVersion(1)]
-[Route("api/v{version:apiVersion}/tipos-servicio")]
+[Route("api/v2/tipos-servicio")]
 [AllowAnonymous]
 public sealed class TipoServiciosController : ControllerBase
 {
@@ -60,7 +58,7 @@ public sealed class TipoServiciosController : ControllerBase
     }
 
     /// <summary>Obtiene un tipo de servicio por GUID.</summary>
-    [HttpGet("{guid:guid}")]
+    [HttpGet("{guid}")]
     [ProducesResponseType(typeof(ApiResponse<TipoServicioResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObtenerPorGuidAsync(
@@ -91,7 +89,7 @@ public sealed class TipoServiciosController : ControllerBase
     }
 
     /// <summary>Actualiza un tipo de servicio existente.</summary>
-    [HttpPut("{guid:guid}")]
+    [HttpPut("{guid}")]
     [ProducesResponseType(typeof(ApiResponse<TipoServicioResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ApiResponse<TipoServicioResponse>>> ActualizarAsync(
@@ -105,7 +103,7 @@ public sealed class TipoServiciosController : ControllerBase
     }
 
     /// <summary>Eliminación lógica de un tipo de servicio.</summary>
-    [HttpDelete("{guid:guid}")]
+    [HttpDelete("{guid}")]
     [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> EliminarAsync(Guid guid, CancellationToken ct = default)

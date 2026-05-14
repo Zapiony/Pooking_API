@@ -41,6 +41,9 @@ public sealed class TipoServicioDataService : ITipoServicioDataService
         return DataPagedResult<TipoServicioDataModel>.DesdeDal(p, TipoServicioDataMapper.AModelo);
     }
 
+    public async Task<bool> TieneServiciosAsociadosAsync(Guid guidTipoServicio, CancellationToken ct = default)
+        => await _uow.ServicioRepository.TieneServiciosAsociadosAsync(guidTipoServicio, ct);
+
     public async Task<TipoServicioDataModel> CrearAsync(TipoServicioDataModel modelo, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(modelo);
